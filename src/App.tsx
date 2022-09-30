@@ -1,6 +1,12 @@
 import React from "react";
+import ShowPage from "./component/showPage";
+
 function App() {
-  return <div className="text-3xl bg-red-600">HEllo world!</div>;
+  return (
+    <div>
+      <ShowPage />
+    </div>
+  );
 }
 
 export default App;

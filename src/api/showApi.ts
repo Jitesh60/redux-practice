@@ -7,3 +7,15 @@ export const getShowList = async (query: string) => {
   );
   return response.data.map((d) => d.show);
 };
+
+export const getShowDetail = async (id: number) => {
+  const response = await axios.get<Show>("https://api.tvmaze.com/shows/" + id);
+  return response.data;
+};
+
+export const getShowCast = async (id: number) => {
+  const response = await axios.get<Show>(
+    "https://api.tvmaze.com/shows/" + id + "/cast"
+  );
+  return response.data;
+};

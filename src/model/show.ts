@@ -11,3 +11,4 @@ export type Show = {
   image: { medium: string; original: string };
   summary: string;
 };
+

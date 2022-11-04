@@ -1,36 +1,18 @@
-import { createStore, applyMiddleware, Reducer } from "redux";
-import { SHOW_FETCH, SHOW_FETCHED } from "./action/show";
+import { createStore, applyMiddleware, Reducer, combineReducers } from "redux";
 import { rootSaga, sagaMiddleware } from "./saga/show";
 import { composeWithDevTools } from "@redux-devtools/extension";
-import { Show } from "../model/show";
+import showReducer from "./reducer/show";
 
-export type State = {
-  shows: { [q: string]: Show[] };
-  showsQuery: string;
-};
-
-const initialState: State = {
-  shows: {},
-  showsQuery: "",
-};
-
-const reducer: Reducer<State> = (state = initialState, action) => {
-  switch (action.type) {
-    case SHOW_FETCH:
-      return { ...state, showsQuery: action.payload };
-    case SHOW_FETCHED:
-      const { query, shows } = action.payload;
-      return { ...state, shows: { ...state.shows, [query]: shows } };
-
-    default:
-      return state;
-  }
-};
+export const reducer = combineReducers({
+  shows: showReducer,
+});
 
 const store = createStore(
   reducer,
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
+
+export type State = ReturnType<typeof store.getState>;
 
 sagaMiddleware.run(rootSaga);
 
